@@ -49,6 +49,11 @@ private enum class CaveAndBasinZoomOverlay {
     SUBMERGED_CHEST_NEEDS_HOOK, SUBMERGED_CHEST_WITH_HOOK
 }
 
+/**
+ * Scene screen for the Cave and Basin historic site.
+ * Features cave drip ambient audio, wildlife hotspots, historic plaques,
+ * and a submerged chest puzzle requiring the Gaff Hook.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CaveAndBasinView(
@@ -90,7 +95,7 @@ fun CaveAndBasinView(
         list
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage cave drip ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.CAVE_DRIP, 0.85f)
@@ -235,7 +240,7 @@ fun CaveAndBasinView(
             alreadyCaptured = viewModel.hasPhoto(photo),
             onCapture = { captured -> viewModel.capturePhoto(captured)
                 SoundManager.shared.play(GameSound.CAMERA_FLASH, 0.45f)
-                        },
+            },
             onDismiss = {
                 SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                 activePhoto = null }

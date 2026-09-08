@@ -6,8 +6,13 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 
+/**
+ * Singleton managing device tactile and haptic feedback, handling API differences
+ * across Android S (API 31), Android Q (API 29), and legacy vibration services.
+ */
 class HapticsManager private constructor(context: Context) {
 
+    // Resolve system vibrator service across Android OS versions
     private val vibrator: Vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         vibratorManager.defaultVibrator
@@ -16,6 +21,7 @@ class HapticsManager private constructor(context: Context) {
         context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 
+    /** Subtle click feedback for standard button and hotspot taps. */
     fun lightTap() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
@@ -25,6 +31,7 @@ class HapticsManager private constructor(context: Context) {
         }
     }
 
+    /** Noticeable feedback for confirming actions or selecting items. */
     fun mediumTap() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
@@ -34,6 +41,7 @@ class HapticsManager private constructor(context: Context) {
         }
     }
 
+    /** Strong tactile impact for sequence hazards or significant physical events. */
     fun heavyImpact() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
@@ -43,6 +51,7 @@ class HapticsManager private constructor(context: Context) {
         }
     }
 
+    /** Two-pulse ascending vibration for puzzle solves and item collections. */
     fun success() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val timings = longArrayOf(0, 30, 60, 40)
@@ -54,6 +63,7 @@ class HapticsManager private constructor(context: Context) {
         }
     }
 
+    /** Alternating rumble for errors, locked doors, or hazard alerts. */
     fun warning() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val timings = longArrayOf(0, 60, 40, 60)
@@ -69,6 +79,7 @@ class HapticsManager private constructor(context: Context) {
         @Volatile
         private var instance: HapticsManager? = null
 
+        /** Thread-safe singleton initialization using application context. */
         fun initialize(context: Context) {
             if (instance == null) {
                 synchronized(this) {
@@ -79,6 +90,7 @@ class HapticsManager private constructor(context: Context) {
             }
         }
 
+        /** Global singleton accessor. */
         val shared: HapticsManager
             get() = instance ?: error("HapticsManager must be initialized in Application or MainActivity")
     }

@@ -1,5 +1,9 @@
 package com.vi.androidapp3.data
 
+/**
+ * Represents collectible tools, keys, and story artifacts.
+ * Each item holds metadata for UI display, asset resolution, and journal tracking.
+ */
 enum class InventoryItem(
     val id: String,
     val displayName: String,
@@ -74,6 +78,7 @@ enum class InventoryItem(
     );
 
     companion object {
+        /** Resolves an InventoryItem by its unique string identifier. */
         fun fromId(id: String): InventoryItem? = entries.find { it.id == id }
     }
 }

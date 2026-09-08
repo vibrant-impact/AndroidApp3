@@ -29,6 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vi.androidapp3.data.LocationLead
 
+/**
+ * Card item representing an individual investigable trail lead in the museum selection list.
+ * Dynamically adjusts styling based on lock status and completion progress.
+ */
 @Composable
 fun LocationLeadCardView(
     lead: LocationLead,

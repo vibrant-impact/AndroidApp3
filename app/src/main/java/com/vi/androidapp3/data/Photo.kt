@@ -1,5 +1,9 @@
 package com.vi.androidapp3.data
 
+/**
+ * Represents an in-game collectible photograph, including its historical context
+ * and the secret anagram letter revealed upon capture.
+ */
 data class Photo(
     val id: String,
     val location: LocationId,
@@ -90,6 +94,7 @@ data class Photo(
             cameraImageName = "camera_tunnel_mountain_snowy_owl"
         )
 
+        /** Complete collection of discoverable photos in the game. */
         val all: List<Photo> = listOf(
             museumExterior,
             bowFalls,
@@ -102,6 +107,7 @@ data class Photo(
             tunnelMountain
         )
 
+        /** Retrieves the photo objective associated with a specific location. */
         fun photo(forLocation: LocationId): Photo? = all.find { it.location == forLocation }
     }
 }

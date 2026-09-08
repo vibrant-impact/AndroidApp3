@@ -20,6 +20,10 @@ import com.vi.androidapp3.ui.components.WelcomeView
 import com.vi.androidapp3.ui.locations.*
 import com.vi.androidapp3.viewmodel.GameViewModel
 
+/**
+ * Main application entry point. Initializes audio and haptic subsystems,
+ * configures volume streams, and sets up the root Jetpack Compose UI content.
+ */
 class MainActivity : ComponentActivity() {
 
     private val gameViewModel: GameViewModel by viewModels()
@@ -52,6 +56,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/** Root location router switching active scene composables based on the ViewModel state. */
 @Composable
 fun CurrentLocationRouter(viewModel: GameViewModel) {
     when (viewModel.currentLocation) {

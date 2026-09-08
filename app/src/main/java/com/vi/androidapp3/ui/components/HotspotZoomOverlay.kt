@@ -27,6 +27,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Modal dialog overlay for inspecting a zoomed-in scene item or hotspot detail,
+ * displaying item imagery, descriptive lore, and primary action options.
+ */
 @Composable
 fun HotspotZoomOverlay(
     title: String,

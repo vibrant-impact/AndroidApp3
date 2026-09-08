@@ -43,6 +43,11 @@ import com.vi.androidapp3.ui.components.SnowfallOverlay
 import com.vi.androidapp3.ui.hud.TopHUDView
 import com.vi.androidapp3.viewmodel.GameViewModel
 
+/**
+ * Scene screen for the historic Banff Springs Hotel.
+ * Features winter snowfall ambience, inspectable hotspots (luggage, carriage, bridge),
+ * and the ghost bride photo objective.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BanffSpringsHotelView(
@@ -60,6 +65,7 @@ fun BanffSpringsHotelView(
 
     var activePhoto by remember { mutableStateOf<Photo?>(null) }
 
+    // Define interactive hotspot hitboxes
     val rawHotspots = remember {
         listOf(
             SceneHotspot("luggage", "Luggage", Rect(84f, 2016f, 84f + 495f, 2016f + 415f)),
@@ -70,10 +76,12 @@ fun BanffSpringsHotelView(
         )
     }
 
+    // Filter out ghost bride hotspot once photographed
     val activeHotspots = remember(viewModel.hasPhotographedGhostBride) {
         rawHotspots.filter { if (it.id == "ghost_bride") !viewModel.hasPhotographedGhostBride else true }
     }
 
+    // Display overlay when ghost bride has been captured
     val activeOverlayObjects = remember(viewModel.hasPhotographedGhostBride) {
         val list = mutableListOf<SceneOverlayObject>()
         if (viewModel.hasPhotographedGhostBride) {
@@ -82,7 +90,7 @@ fun BanffSpringsHotelView(
         list
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage snowy exterior ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.SNOWY_EXTERIOR, 0.85f)
@@ -186,7 +194,7 @@ fun BanffSpringsHotelView(
             alreadyCaptured = viewModel.hasPhoto(photo),
             onCapture = { captured -> viewModel.capturePhoto(captured)
                 SoundManager.shared.play(GameSound.CAMERA_FLASH, 0.45f)
-                        },
+            },
             onDismiss = {
                 SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                 activePhoto = null }

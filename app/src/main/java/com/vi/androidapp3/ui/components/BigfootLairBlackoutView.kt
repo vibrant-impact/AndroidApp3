@@ -24,6 +24,11 @@ import com.vi.androidapp3.audio.GameSound
 import com.vi.androidapp3.audio.SoundManager
 import kotlinx.coroutines.delay
 
+/**
+ * Cinematic narrative blackout overlay in Bigfoot's Lair.
+ * Plays the low cave rumble and fades sequential story text in and out
+ * before transitioning the player back to the museum exterior.
+ */
 @Composable
 fun BigfootLairBlackoutView(
     onFinished: () -> Unit,
@@ -33,6 +38,7 @@ fun BigfootLairBlackoutView(
     val messageOpacity = remember { Animatable(0f) }
     val finalMessageOpacity = remember { Animatable(0f) }
 
+    // Sequenced fade-in and timer triggers
     LaunchedEffect(Unit) {
         SoundManager.shared.play(GameSound.BLACKOUT_RUMBLE, 0.85f)
         opacity.animateTo(1f, tween(2000))

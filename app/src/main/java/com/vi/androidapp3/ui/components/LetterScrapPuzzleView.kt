@@ -39,12 +39,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.util.UUID
 
+/** Represents an individual draggable letter scrap tile in the curator's puzzle. */
 data class PuzzleLetterTile(
     val id: UUID = UUID.randomUUID(),
     val letter: String,
     val imageName: String
 )
 
+/**
+ * Anagram word puzzle interface at the curator's desk.
+ * Players drag or tap collected letter scraps into slots to spell the final solution.
+ */
 @Composable
 fun LetterScrapPuzzleView(
     letters: String,
@@ -58,6 +63,7 @@ fun LetterScrapPuzzleView(
     var selectedTileId by remember { mutableStateOf<UUID?>(null) }
     var message by remember { mutableStateOf<String?>(null) }
 
+    // Parses discovered letters into custom puzzle tile assets
     fun setupTiles() {
         val discoveredLetters = letters.uppercase().toList()
         val letterCounts = mutableMapOf<String, Int>()
@@ -99,7 +105,7 @@ fun LetterScrapPuzzleView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Available Scraps Area
+        // Available Scraps Pool Area
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -131,7 +137,7 @@ fun LetterScrapPuzzleView(
         Text("Arrange the letter scraps.", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
         Text("Tap a scrap, then tap a space.", fontSize = 13.sp, color = Color.White.copy(alpha = 0.7f))
 
-        // Answer Line Slots
+        // Target Anagram Answer Slots
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -213,6 +219,7 @@ fun LetterScrapPuzzleView(
     }
 }
 
+/** Renders an individual letter scrap graphic tile with selection scaling and shadow effects. */
 @Composable
 fun LetterScrapTileView(
     tile: PuzzleLetterTile,

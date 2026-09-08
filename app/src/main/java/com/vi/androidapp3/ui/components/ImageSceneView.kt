@@ -32,12 +32,18 @@ import com.vi.androidapp3.data.SceneOverlayObject
 import kotlin.math.max
 import kotlin.math.roundToInt
 
+/** Holds coordinate-scaling layout metrics for rendering background artwork. */
 data class ImageLayout(
     val scale: Float,
     val origin: Offset,
     val renderedSize: Size
 )
 
+/**
+ * Core scene rendering container. Maps high-resolution art assets (1290 x 2796)
+ * to screen dimensions, overlays dynamic state objects, and projects touch-sensitive
+ * hotspot bounding boxes.
+ */
 @Composable
 fun ImageSceneView(
     imageName: String,
@@ -61,6 +67,7 @@ fun ImageSceneView(
         val containerWidth = constraints.maxWidth.toFloat()
         val containerHeight = constraints.maxHeight.toFloat()
 
+        // Calculate proportional scaling to fit screen bounds
         val scale = max(
             containerWidth / canvasSize.width,
             containerHeight / canvasSize.height
@@ -71,7 +78,7 @@ fun ImageSceneView(
         val originY = (containerHeight - renderedHeight) / 2f
         val layout = ImageLayout(scale, Offset(originX, originY), Size(renderedWidth, renderedHeight))
 
-        // Base Scene Image
+        // Render Base Scene Image
         if (baseImageResId != 0) {
             Image(
                 painter = painterResource(id = baseImageResId),
@@ -86,7 +93,7 @@ fun ImageSceneView(
             )
         }
 
-        // Overlay Visual State Objects
+        // Render Overlay Visual State Objects (e.g. opened boxes, dug-up snow)
         overlayObjects.forEach { overlay ->
             val overlayResId = context.resources.getIdentifier(overlay.imageName, "drawable", context.packageName)
             if (overlayResId != 0) {
@@ -105,7 +112,7 @@ fun ImageSceneView(
             }
         }
 
-        // Hotspot clickable bounds
+        // Project interactive hotspot clickable bounds
         hotspots.forEach { hotspot ->
             val scaledRect = scaleRect(hotspot.rect, layout)
             val interactionSource = remember { MutableInteractionSource() }
@@ -148,6 +155,7 @@ fun ImageSceneView(
     }
 }
 
+/** Scales design canvas rectangles to actual device screen render dimensions. */
 private fun scaleRect(rect: Rect, layout: ImageLayout): Rect {
     return Rect(
         left = layout.origin.x + rect.left * layout.scale,

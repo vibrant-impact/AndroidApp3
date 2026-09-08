@@ -26,6 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Persistent top Head-Up Display (HUD) overlay rendered across explorable scene screens.
+ * Displays current location titles, subtitles, and quick-access buttons for the Bag and Journal.
+ */
 @Composable
 fun TopHUDView(
     locationTitle: String,

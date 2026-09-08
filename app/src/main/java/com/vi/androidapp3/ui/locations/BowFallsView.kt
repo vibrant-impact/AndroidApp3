@@ -50,6 +50,10 @@ private enum class BowFallsZoomOverlay {
     GAFF_HOOK, BURIED_CANISTER_NEEDS_SHOVEL, BURIED_CANISTER_WITH_SHOVEL
 }
 
+/**
+ * Scene screen for Bow Falls. Features frozen ice wall view points, snowfall overlays,
+ * tool collection (Gaff Hook and Wooden Matches using the shovel), and photography objectives.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BowFallsView(
@@ -99,7 +103,7 @@ fun BowFallsView(
         list
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage snowy exterior ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.SNOWY_EXTERIOR, 0.85f)
@@ -149,7 +153,7 @@ fun BowFallsView(
             onBagTapped = {
                 SoundManager.shared.play(GameSound.CLICK, 0.5f)
                 showingInventory = true
-                          },
+            },
             onJournalTapped = {
                 SoundManager.shared.play(GameSound.CLICK, 0.5f)
                 showingJournal = true
@@ -199,7 +203,7 @@ fun BowFallsView(
                     onPrimaryAction = {
                         SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                         activeZoomOverlay = null
-                                      },
+                    },
                     onClose = {
                         SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                         activeZoomOverlay = null
@@ -264,7 +268,7 @@ fun BowFallsView(
             alreadyCaptured = viewModel.hasPhoto(photo),
             onCapture = { captured -> viewModel.capturePhoto(captured)
                 SoundManager.shared.play(GameSound.CAMERA_FLASH, 0.85f)
-                        },
+            },
             onDismiss = {
                 SoundManager.shared.play(GameSound.CLOSE, 0.85f)
                 activePhoto = null }

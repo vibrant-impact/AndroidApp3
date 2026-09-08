@@ -53,6 +53,11 @@ private enum class TunnelMountainZoomOverlay {
     CAVE_ENTRANCE_NEEDS_AXE, CAVE_ENTRANCE_WITH_AXE
 }
 
+/**
+ * Scene screen for Tunnel Mountain. Features snowy owl wildlife photography,
+ * trail tracks, and the boarded cave entrance puzzle requiring the Woodcutter's Axe
+ * to trigger the falling icicle sequence into Bigfoot's Lair.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TunnelMountainView(
@@ -91,6 +96,7 @@ fun TunnelMountainView(
         list
     }
 
+    // Manage snowy exterior ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.SNOWY_EXTERIOR, 1.0f)
@@ -257,7 +263,7 @@ fun TunnelMountainView(
             alreadyCaptured = viewModel.hasPhoto(photo),
             onCapture = { captured -> viewModel.capturePhoto(captured)
                 SoundManager.shared.play(GameSound.CAMERA_FLASH, 0.45f)
-                        },
+            },
             onDismiss = {
                 SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                 activePhoto = null }

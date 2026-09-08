@@ -48,6 +48,11 @@ private enum class BigfootLairOverlay {
     CAVE_EXIT, BIGFOOT_FAMILY, LOST_LEMON_MINE
 }
 
+/**
+ * Secret endgame scene inside Bigfoot's Lair.
+ * Handles the wake-up blur sequence, cave explorations, Bigfoot photo evidence capture,
+ * and triggers the final escape sequence.
+ */
 @Composable
 fun BigfootLairView(
     viewModel: GameViewModel,
@@ -60,6 +65,7 @@ fun BigfootLairView(
     var showingBigfootCamera by remember { mutableStateOf(false) }
     var showingFinalBlackout by remember { mutableStateOf(false) }
 
+    // Wake-up sequence visual transition states
     val wakeUpBlur = remember { Animatable(18f) }
     val wakeUpBlackOpacity = remember { Animatable(1f) }
     val wakeUpTextOpacity = remember { Animatable(0f) }
@@ -74,6 +80,7 @@ fun BigfootLairView(
         )
     }
 
+    // Execute wake-up fade animation on screen entry
     LaunchedEffect(Unit) {
         delay(350)
         wakeUpTextOpacity.animateTo(1f, tween(900))
@@ -88,6 +95,7 @@ fun BigfootLairView(
         isShowingWakeUpSequence = false
     }
 
+    // Triggers final blackout sequence once all key cave interactions are completed
     fun checkForLairCompletion() {
         if (viewModel.hasCompletedRequiredLairInteractions) {
             scope.launch {
@@ -97,7 +105,7 @@ fun BigfootLairView(
         }
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage cave drip ambient audio lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.CAVE_DRIP, 0.85f)
@@ -214,6 +222,7 @@ fun BigfootLairView(
             }
         }
 
+        // Initial wake-up narrative text layer
         if (isShowingWakeUpSequence) {
             Box(
                 modifier = Modifier

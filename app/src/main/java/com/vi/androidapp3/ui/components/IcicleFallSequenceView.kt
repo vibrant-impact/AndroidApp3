@@ -35,6 +35,10 @@ import com.vi.androidapp3.audio.SoundManager
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
+/**
+ * Animated hazard sequence in the cave where a giant icicle splits and falls,
+ * triggering screen shake, impact flashes, and a narrative blackout.
+ */
 @Composable
 fun IcicleFallSequenceView(
     onFinished: () -> Unit,
@@ -49,15 +53,18 @@ fun IcicleFallSequenceView(
         context.resources.getIdentifier("falling_icicle", "drawable", context.packageName)
     }
 
+    // Animation states for the falling icicle
     val icicleY = remember { Animatable(-420f) }
     val icicleX = remember { Animatable(0f) }
     val icicleRotation = remember { Animatable(-8f) }
     val icicleOpacity = remember { Animatable(0f) }
 
+    // Screen shockwave states
     val sceneScale = remember { Animatable(1f) }
     val sceneShakeX = remember { Animatable(0f) }
     val sceneShakeY = remember { Animatable(0f) }
 
+    // Flash, blackout, and narrative text opacities
     val impactFlashOpacity = remember { Animatable(0f) }
     val blackoutOpacity = remember { Animatable(0f) }
     val textOpacity = remember { Animatable(0f) }
@@ -69,6 +76,7 @@ fun IcicleFallSequenceView(
     ) {
         val screenHeight = maxHeight.value
 
+        // Timed choreography for the falling hazard sequence
         LaunchedEffect(Unit) {
             delay(1150)
             icicleOpacity.animateTo(1f, tween(250))
@@ -83,7 +91,7 @@ fun IcicleFallSequenceView(
             impactFlashOpacity.snapTo(1f)
             sceneScale.snapTo(1.06f)
 
-            // Shake
+            // Screen shake offsets simulation
             val shakes = listOf(
                 Pair(-22f, 8f), Pair(24f, -7f), Pair(-18f, 6f),
                 Pair(16f, -5f), Pair(-10f, 3f), Pair(7f, -2f), Pair(0f, 0f)

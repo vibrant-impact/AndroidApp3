@@ -10,6 +10,10 @@ import com.vi.androidapp3.data.LocationId
 import com.vi.androidapp3.data.LocationLead
 import com.vi.androidapp3.data.Photo
 
+/**
+ * Central ViewModel managing game state, quest progressions, inventory ownership,
+ * journal photo collections, and location unlock logic across the entire app.
+ */
 class GameViewModel : ViewModel() {
 
     // MARK: - App State

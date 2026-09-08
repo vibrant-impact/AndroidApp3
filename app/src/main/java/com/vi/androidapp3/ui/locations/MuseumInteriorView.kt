@@ -52,6 +52,11 @@ import com.vi.androidapp3.ui.components.InventoryView
 import com.vi.androidapp3.ui.components.JournalView
 import com.vi.androidapp3.viewmodel.GameViewModel
 
+/**
+ * Scene screen for the interior of the Banff Park Museum (Main Hub).
+ * Features crackling fireplace ambience, exhibits, visitor logbooks,
+ * access to the Corkboard investigation map, and dialogue with the curator.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MuseumInteriorView(
@@ -90,7 +95,7 @@ fun MuseumInteriorView(
         )
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage interior fireplace ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.FIREPLACE, 0.85f)
@@ -212,7 +217,7 @@ fun MuseumInteriorView(
                 .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.78f))))
         )
 
-        // Controls
+        // Top and Bottom HUD Controls
         Column(
             modifier = Modifier
                 .fillMaxSize()

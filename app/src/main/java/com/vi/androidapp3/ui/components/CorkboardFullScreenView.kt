@@ -25,6 +25,7 @@ import com.vi.androidapp3.data.SceneOverlayObject
 import com.vi.androidapp3.ui.hud.TopHUDView
 import com.vi.androidapp3.viewmodel.GameViewModel
 
+/** Maps tappable pins on the corkboard map to destinations. */
 private data class CorkboardLocationHotspot(
     val id: String,
     val name: String,
@@ -32,6 +33,7 @@ private data class CorkboardLocationHotspot(
     val rect: Rect
 )
 
+/** Maps discovered anagram letters to their pin locations on the board. */
 private data class CorkboardLetterOverlay(
     val id: String,
     val imageName: String,
@@ -39,6 +41,11 @@ private data class CorkboardLetterOverlay(
     val rect: Rect
 )
 
+/**
+ * Full-screen investigation map inside the curator's office.
+ * Displays discovered anagram letters pinned to the board and allows fast-travel
+ * by tapping pinned destination photos.
+ */
 @Composable
 fun CorkboardFullScreenView(
     viewModel: GameViewModel,
@@ -47,6 +54,7 @@ fun CorkboardFullScreenView(
 ) {
     val canvasSize = remember { Size(1290f, 2796f) }
 
+    // Tappable travel hotspots for regional investigation sites
     val locationHotspots = remember {
         listOf(
             CorkboardLocationHotspot("cave_and_basin", "Cave and Basin", LocationId.CAVE_AND_BASIN, Rect(167f, 1234f, 167f + 265f, 1234f + 264f)),
@@ -60,6 +68,7 @@ fun CorkboardFullScreenView(
         )
     }
 
+    // Pinned letter scraps revealed as photos are taken
     val letterOverlays = remember {
         listOf(
             CorkboardLetterOverlay("letter_a_museum_exterior", "corkboard_letter_a_1", Photo.museumExterior, Rect(128f, 1025f, 128f + 121f, 1025f + 156f)),
@@ -78,6 +87,7 @@ fun CorkboardFullScreenView(
         locationHotspots.map { SceneHotspot(it.id, it.name, it.rect) }
     }
 
+    // Only render letters for photos the player has captured
     val activeOverlayObjects = remember(viewModel.photoIDs) {
         letterOverlays
             .filter { viewModel.hasPhoto(it.photo) }

@@ -50,6 +50,11 @@ import com.vi.androidapp3.audio.SoundManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * Interactive camera viewfinder used inside Bigfoot's Lair.
+ * Simulates snapping evidence of Bigfoot, triggering a flash animation,
+ * and revealing an empty cave photograph as Bigfoot vanishes.
+ */
 @Composable
 fun BigfootEvidenceCameraView(
     onCapture: () -> Unit,
@@ -61,6 +66,7 @@ fun BigfootEvidenceCameraView(
     val flashOpacity = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
 
+    // Resolve drawable resource IDs for before and after capture states
     val lairImageResId = remember {
         context.resources.getIdentifier("camera_bigfoot_in_lair", "drawable", context.packageName)
     }
@@ -78,6 +84,7 @@ fun BigfootEvidenceCameraView(
             )
     ) {
         if (hasTakenPhoto) {
+            // Post-capture polaroid result showing the creature disappeared
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -135,6 +142,7 @@ fun BigfootEvidenceCameraView(
                 }
             }
         } else {
+            // Active camera viewfinder screen
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -158,6 +166,7 @@ fun BigfootEvidenceCameraView(
                     )
                 }
 
+                // Viewfinder framing Bigfoot in the lair
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -199,6 +208,7 @@ fun BigfootEvidenceCameraView(
                     }
                 }
 
+                // Shutter button trigger
                 Box(
                     modifier = Modifier
                         .padding(bottom = 24.dp)
@@ -223,6 +233,7 @@ fun BigfootEvidenceCameraView(
             }
         }
 
+        // Screen-wide white camera flash overlay
         if (flashOpacity.value > 0f) {
             Box(
                 modifier = Modifier

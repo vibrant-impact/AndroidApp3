@@ -1,5 +1,8 @@
 package com.vi.androidapp3.data
 
+/**
+ * Progression gates categorizing investigation milestones in the museum journal.
+ */
 enum class LocationLeadPhase(val rawValue: Int, val title: String, val lockedMessage: String) {
     FIRST(1, "The Foundations", ""),
     SECOND(2, "The Ascent", "Find usable items from the first three leads."),
@@ -7,6 +10,9 @@ enum class LocationLeadPhase(val rawValue: Int, val title: String, val lockedMes
     FINAL(4, "The Final Trail", "Recover the woodcutter's axe from the ice.")
 }
 
+/**
+ * Encapsulates field notes, lore teasers, and lock states displayed on the museum map desk.
+ */
 data class LocationLead(
     val id: String,
     val title: String,
@@ -18,6 +24,7 @@ data class LocationLead(
     val iconName: String
 ) {
     companion object {
+        /** Master registry of all investigable trail leads across the park. */
         val all: List<LocationLead> = listOf(
             LocationLead(
                 id = "banff_springs_hotel",

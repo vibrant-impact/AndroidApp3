@@ -6,13 +6,18 @@ import android.media.MediaPlayer
 import android.media.SoundPool
 import android.util.Log
 
+/**
+ * Singleton coordinating all game audio:
+ * - Low-latency one-shot effects via SoundPool.
+ * - Looping environmental tracks via managed MediaPlayer instances.
+ */
 class SoundManager private constructor(private val context: Context) {
 
     private val tag = "SoundManager"
     private val soundPool: SoundPool
-    private val soundIdMap = mutableMapOf<Int, Int>()
-    private val loadedSoundIds = mutableSetOf<Int>()
-    private val ambiencePlayers = mutableMapOf<Int, MediaPlayer>()
+    private val soundIdMap = mutableMapOf<Int, Int>() // Maps raw resource ID -> SoundPool sample ID
+    private val loadedSoundIds = mutableSetOf<Int>()   // Tracks successfully decoded samples
+    private val ambiencePlayers = mutableMapOf<Int, MediaPlayer>() // Active looping ambient players
 
     init {
         val audioAttributes = AudioAttributes.Builder()
@@ -25,6 +30,7 @@ class SoundManager private constructor(private val context: Context) {
             .setAudioAttributes(audioAttributes)
             .build()
 
+        // Track when samples finish asynchronous decoding into memory
         soundPool.setOnLoadCompleteListener { _, sampleId, status ->
             if (status == 0) {
                 loadedSoundIds.add(sampleId)
@@ -37,6 +43,7 @@ class SoundManager private constructor(private val context: Context) {
         preloadSounds()
     }
 
+    /** Preloads all game sound effects into memory for instant playback. */
     private fun preloadSounds() {
         GameSound.entries.forEach { sound ->
             try {
@@ -48,6 +55,7 @@ class SoundManager private constructor(private val context: Context) {
         }
     }
 
+    /** Plays a short sound effect via SoundPool, falling back to MediaPlayer if still loading. */
     fun play(sound: GameSound, volume: Float = 1.0f) {
         val soundId = soundIdMap[sound.resId]
 
@@ -68,6 +76,7 @@ class SoundManager private constructor(private val context: Context) {
         }
     }
 
+    /** Starts or resumes continuous looping ambient sound for a location. */
     fun playAmbience(ambience: AmbientSound, volume: Float = 0.35f) {
         val key = ambience.resId
         val existing = ambiencePlayers[key]
@@ -96,6 +105,7 @@ class SoundManager private constructor(private val context: Context) {
         }
     }
 
+    /** Stops and releases a specific ambient track when exiting a location. */
     fun stopAmbience(ambience: AmbientSound) {
         ambiencePlayers.remove(ambience.resId)?.let { player ->
             try {
@@ -109,6 +119,7 @@ class SoundManager private constructor(private val context: Context) {
         }
     }
 
+    /** Stops and releases all active ambient sound players. */
     fun stopAllAmbience() {
         ambiencePlayers.values.forEach { player ->
             try {
@@ -127,6 +138,7 @@ class SoundManager private constructor(private val context: Context) {
         @Volatile
         private var instance: SoundManager? = null
 
+        /** Thread-safe singleton initialization using application context. */
         fun initialize(context: Context) {
             if (instance == null) {
                 synchronized(this) {
@@ -137,6 +149,7 @@ class SoundManager private constructor(private val context: Context) {
             }
         }
 
+        /** Global singleton accessor. */
         val shared: SoundManager
             get() = instance ?: error("SoundManager must be initialized before access")
     }

@@ -33,6 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
+/**
+ * Special discovery popup overlay when the player finds the Lost Lemon Gold Nugget
+ * hidden in their coat pocket after escaping Bigfoot's Lair.
+ */
 @Composable
 fun PocketGoldNuggetOverlay(
     onAddToInventory: () -> Unit,
@@ -47,6 +51,7 @@ fun PocketGoldNuggetOverlay(
     val nuggetOpacity = remember { Animatable(0f) }
     val textOpacity = remember { Animatable(0f) }
 
+    // Spring entrance animation for the rare gold nugget reward
     LaunchedEffect(Unit) {
         nuggetScale.animateTo(1f, spring(dampingRatio = 0.72f, stiffness = Spring.StiffnessMediumLow))
         nuggetOpacity.animateTo(1f, tween(300))

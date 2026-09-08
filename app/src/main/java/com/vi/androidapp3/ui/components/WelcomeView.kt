@@ -57,6 +57,10 @@ import androidx.compose.ui.unit.sp
 import com.vi.androidapp3.data.LocationId
 import com.vi.androidapp3.viewmodel.GameViewModel
 
+/**
+ * Main title and welcome screen. Introduces the player to the Banff mystery hunt,
+ * displays the prologue message, features, and provides access to rules and game start.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeView(
@@ -99,7 +103,7 @@ fun WelcomeView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Title Section
+            // Title Header Section
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -129,7 +133,7 @@ fun WelcomeView(
                 )
             }
 
-            // Banner Image
+            // Promotional Banner Artwork
             if (bannerResId != 0) {
                 Image(
                     painter = painterResource(id = bannerResId),
@@ -142,7 +146,7 @@ fun WelcomeView(
                 )
             }
 
-            // Story Card
+            // Prologue Story Card
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -174,7 +178,7 @@ fun WelcomeView(
                 )
             }
 
-            // Feature Cards
+            // Key Feature Highlights Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -199,7 +203,7 @@ fun WelcomeView(
                 )
             }
 
-            // Action Buttons
+            // Navigation & Action Buttons
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -245,6 +249,7 @@ fun WelcomeView(
             }
         }
 
+        // How to Play instructions modal sheet
         if (showingHowToPlay) {
             ModalBottomSheet(
                 onDismissRequest = { showingHowToPlay = false },
@@ -257,6 +262,7 @@ fun WelcomeView(
     }
 }
 
+/** Individual feature highlight card on the welcome screen. */
 @Composable
 private fun WelcomeFeatureRow(
     icon: ImageVector,
@@ -294,6 +300,7 @@ private fun WelcomeFeatureRow(
     }
 }
 
+/** Contents of the 'How to Play' instruction modal. */
 @Composable
 private fun HowToPlaySheet(onDone: () -> Unit) {
     Column(
@@ -324,6 +331,7 @@ private fun HowToPlaySheet(onDone: () -> Unit) {
     }
 }
 
+/** Reusable instruction rule block. */
 @Composable
 private fun InstructionSection(title: String, text: String) {
     Column(

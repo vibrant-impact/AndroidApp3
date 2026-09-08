@@ -44,6 +44,11 @@ private enum class ObservatoryZoomOverlay {
     LOCKER_WITH_KEY, LOGBOOK
 }
 
+/**
+ * Scene screen for the Sulphur Mountain Observatory weather station.
+ * Features old equipment inspection, logbook reading yielding tunnel mountain lore,
+ * and a cabinet lock puzzle unlocked using the Observatory Locker Key.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ObservatoryView(

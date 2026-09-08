@@ -1,5 +1,9 @@
 package com.vi.androidapp3.data
 
+/**
+ * Unique identifiers for all explorable locations and narrative scenes across Banff.
+ * Used for navigation routing, state tracking, and background ambient audio mapping.
+ */
 enum class LocationId(val displayName: String) {
     MUSEUM_EXTERIOR("Museum Exterior"),
     MUSEUM_INTERIOR("Banff Park Museum"),

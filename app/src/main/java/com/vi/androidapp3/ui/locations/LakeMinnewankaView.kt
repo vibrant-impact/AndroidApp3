@@ -50,6 +50,11 @@ private enum class LakeMinnewankaZoomOverlay {
     CRATE_NEEDS_CROWBAR, CRATE_WITH_CROWBAR
 }
 
+/**
+ * Scene screen for Lake Minnewanka. Features underwater ghost town photography,
+ * winter lakeside scenery, and a frozen crate puzzle requiring the Rusty Crowbar
+ * to retrieve the Woodcutter's Axe.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LakeMinnewankaView(
@@ -91,7 +96,7 @@ fun LakeMinnewankaView(
         list
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage snowy exterior ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.SNOWY_EXTERIOR, 0.85f)
@@ -234,7 +239,7 @@ fun LakeMinnewankaView(
             alreadyCaptured = viewModel.hasPhoto(photo),
             onCapture = { captured -> viewModel.capturePhoto(captured)
                 SoundManager.shared.play(GameSound.CAMERA_FLASH, 0.45f)
-                        },
+            },
             onDismiss = {
                 SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                 activePhoto = null }

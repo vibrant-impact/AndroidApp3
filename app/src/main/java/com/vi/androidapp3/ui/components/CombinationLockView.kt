@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.vi.androidapp3.audio.GameSound
 import com.vi.androidapp3.audio.SoundManager
 
+/** Single digit column dial for the combination lock tumbler. */
 @Composable
 fun LockDial(
     value: Int,
@@ -68,6 +69,9 @@ fun LockDial(
     }
 }
 
+/**
+ * Modal bottom sheet presenting an old four-digit tumbler lock for the museum door.
+ */
 @Composable
 fun CombinationLockView(
     correctCode: String,
@@ -87,6 +91,7 @@ fun CombinationLockView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
+        // Drag handle indicator
         Box(
             modifier = Modifier
                 .width(44.dp)
@@ -109,6 +114,7 @@ fun CombinationLockView(
             )
         }
 
+        // 4-digit mechanical dial row
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.padding(vertical = 6.dp)
@@ -126,6 +132,7 @@ fun CombinationLockView(
             }
         }
 
+        // Action buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(14.dp)

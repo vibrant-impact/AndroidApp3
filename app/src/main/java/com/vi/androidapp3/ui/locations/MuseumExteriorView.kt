@@ -57,6 +57,11 @@ private enum class MuseumExteriorZoomOverlay {
     MAILBOX_CLOSED, MAILBOX_OPEN, SHOVEL, SIGN, DOOR
 }
 
+/**
+ * Primary arrival scene screen outside the Banff Park Museum.
+ * Features opening mailbox letter notes, shovel acquisition, museum door combination lock (1903),
+ * footprint photo capture, and post-lair wake-up sequences.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MuseumExteriorView(
@@ -111,6 +116,7 @@ fun MuseumExteriorView(
         list
     }
 
+    // Handles post-lair return fade-in text and pocket gold discovery triggers
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.SNOWY_EXTERIOR, 1.0f)
@@ -133,7 +139,7 @@ fun MuseumExteriorView(
         }
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage snowy exterior ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.SNOWY_EXTERIOR, 0.85f)
@@ -380,7 +386,7 @@ fun MuseumExteriorView(
             alreadyCaptured = viewModel.hasPhoto(photo),
             onCapture = { captured -> viewModel.capturePhoto(captured)
                 SoundManager.shared.play(GameSound.CAMERA_FLASH, 0.45f)
-                        },
+            },
             onDismiss = {
                 SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                 activePhoto = null }

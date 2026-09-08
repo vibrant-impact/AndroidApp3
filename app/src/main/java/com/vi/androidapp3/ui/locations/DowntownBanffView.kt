@@ -49,6 +49,11 @@ private enum class DowntownZoomOverlay {
     CAFE_NO_LEAD, CAFE_NO_TOKEN, CAFE_TRADE_TOKEN, CAFE_AFTER_TRADE
 }
 
+/**
+ * Scene screen for Downtown Banff. Features town street ambient audio,
+ * iconic sculpture photography objectives, and the Snowy Owl Cafe trade puzzle
+ * where the Vintage Brass Token is exchanged for the observatory lead.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DowntownBanffView(
@@ -78,7 +83,7 @@ fun DowntownBanffView(
         )
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage town street ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.TOWN_STREET, 0.85f)
@@ -254,7 +259,7 @@ fun DowntownBanffView(
             alreadyCaptured = viewModel.hasPhoto(photo),
             onCapture = { captured -> viewModel.capturePhoto(captured)
                 SoundManager.shared.play(GameSound.CAMERA_FLASH, 0.45f)
-                        },
+            },
             onDismiss = {
                 SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                 activePhoto = null }

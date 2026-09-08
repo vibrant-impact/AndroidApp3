@@ -26,6 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vi.androidapp3.data.InventoryItem
 
+/**
+ * Popup reward overlay triggered immediately when an inventory item or tool is discovered.
+ */
 @Composable
 fun ItemCollectedOverlay(
     item: InventoryItem,

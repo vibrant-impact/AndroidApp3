@@ -51,6 +51,11 @@ private enum class SulphurMountainZoomOverlay {
     DOOR_NEEDS_MELT, DOOR_NEEDS_MELT_WITH_MATCHES
 }
 
+/**
+ * Scene screen for Sulphur Mountain Summit. Features sweeping valley viewpoints,
+ * wildlife observations, panoramic photography, and a frozen weather station door puzzle
+ * that is cleared using Wooden Matches.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SulphurMountainView(
@@ -80,6 +85,7 @@ fun SulphurMountainView(
         )
     }
 
+    // Manage snowy exterior ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.SNOWY_EXTERIOR, 1.0f)
@@ -227,7 +233,7 @@ fun SulphurMountainView(
             alreadyCaptured = viewModel.hasPhoto(photo),
             onCapture = { captured -> viewModel.capturePhoto(captured)
                 SoundManager.shared.play(GameSound.CAMERA_FLASH, 0.45f)
-                        },
+            },
             onDismiss = {
                 SoundManager.shared.play(GameSound.CLOSE, 0.45f)
                 activePhoto = null }

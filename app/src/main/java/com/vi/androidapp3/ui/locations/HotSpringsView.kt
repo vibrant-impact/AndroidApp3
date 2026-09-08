@@ -50,6 +50,11 @@ private enum class HotSpringsZoomOverlay {
     MAP_TABLE, KEYS_AVAILABLE
 }
 
+/**
+ * Scene screen for the Upper Hot Springs. Features steaming pool hot spots,
+ * Marilyn Monroe photo capture, map investigation leads, and the key board puzzle
+ * yielding the Observatory Locker Key.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HotSpringsView(
@@ -101,7 +106,7 @@ fun HotSpringsView(
         list
     }
 
-    // 1. Ambience Management: Start river/winter ambience on enter, stop on exit
+    // Manage snowy exterior ambient sound lifecycle
     LaunchedEffect(Unit) {
         SoundManager.shared.stopAllAmbience()
         SoundManager.shared.playAmbience(AmbientSound.SNOWY_EXTERIOR, 0.85f)

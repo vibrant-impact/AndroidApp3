@@ -39,6 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vi.androidapp3.data.Photo
 
+/**
+ * Bottom sheet modal displaying captured historical photos, collection counts,
+ * historical trivia notes, and the generated reward/discount code status.
+ */
 @Composable
 fun JournalView(
     journalPhotos: List<Photo>,
@@ -76,7 +80,7 @@ fun JournalView(
             )
         }
 
-        // Progress Card
+        // Collection Progress Summary Card
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -160,7 +164,7 @@ fun JournalView(
                         horizontalArrangement = Arrangement.spacedBy(14.dp),
                         verticalAlignment = Alignment.Top
                     ) {
-                        // Mini Polaroid
+                        // Mini polaroid snapshot preview
                         Column(
                             modifier = Modifier
                                 .rotate(rotation)

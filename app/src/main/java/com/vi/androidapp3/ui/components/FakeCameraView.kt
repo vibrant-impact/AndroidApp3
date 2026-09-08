@@ -50,6 +50,11 @@ import com.vi.androidapp3.data.Photo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * Full-screen camera viewfinder and polaroid inspector for historical photo collection.
+ * Shows active reticle viewfinder prior to capture, animates screen flash,
+ * and displays the captured polaroid with its clue letter and historical context.
+ */
 @Composable
 fun FakeCameraView(
     photo: Photo,
@@ -81,7 +86,7 @@ fun FakeCameraView(
             )
     ) {
         if (showingPolaroid) {
-            // Polaroid Result
+            // Polaroid card view with clue letter and historical background
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -160,7 +165,7 @@ fun FakeCameraView(
                 }
             }
         } else {
-            // Viewfinder Screen
+            // Live camera viewfinder screen
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -181,7 +186,7 @@ fun FakeCameraView(
 
                 Text(photo.photoName, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
-                // Viewfinder
+                // Viewfinder reticle overlay
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -209,7 +214,7 @@ fun FakeCameraView(
 
                 Text("Snap the Pic", fontSize = 12.sp, color = Color.White.copy(alpha = 0.55f))
 
-                // Shutter Button
+                // Circular shutter button
                 Box(
                     modifier = Modifier
                         .padding(bottom = 24.dp)
@@ -235,7 +240,7 @@ fun FakeCameraView(
             }
         }
 
-        // Camera Flash Overlay
+        // Full-screen white flash overlay
         if (flashOpacity.value > 0f) {
             Box(
                 modifier = Modifier

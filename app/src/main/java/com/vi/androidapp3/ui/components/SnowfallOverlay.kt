@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import kotlin.math.sin
 import kotlin.random.Random
 
+/** Defines properties for an individual animated snowflake particle. */
 private data class Snowflake(
     val xRatio: Float,
     val yRatio: Float,
@@ -26,6 +27,9 @@ private data class Snowflake(
     val phase: Float
 )
 
+/**
+ * Atmospheric particle overlay rendering continuous drifting snowfall across outdoor scenes.
+ */
 @Composable
 fun SnowfallOverlay(
     flakeCount: Int = 60,
@@ -48,6 +52,7 @@ fun SnowfallOverlay(
 
     var timeSeconds by remember { mutableFloatStateOf(0f) }
 
+    // Frame-tick loop for smooth particle movement physics
     LaunchedEffect(Unit) {
         val startTime = System.nanoTime()
         while (true) {

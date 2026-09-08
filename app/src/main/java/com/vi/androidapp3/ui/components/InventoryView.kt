@@ -36,6 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vi.androidapp3.data.InventoryItem
 
+/**
+ * Bottom sheet modal displaying the player's collected inventory items and tools.
+ */
 @Composable
 fun InventoryView(
     items: List<InventoryItem>,

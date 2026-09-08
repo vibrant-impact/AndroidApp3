@@ -53,8 +53,14 @@ import com.vi.androidapp3.audio.GameSound
 import com.vi.androidapp3.audio.SoundManager
 import com.vi.androidapp3.viewmodel.GameViewModel
 
+/** Progression stages for the curator endgame encounter. */
 private enum class CuratorEndingPhase { PUZZLE, REWARDS }
 
+/**
+ * Endgame narrative screen at the curator's desk.
+ * Checks for complete photo journal collection, hosts the final anagram puzzle,
+ * and presents completion rewards.
+ */
 @Composable
 fun CuratorEndingView(
     viewModel: GameViewModel,
@@ -113,6 +119,7 @@ fun CuratorEndingView(
                             textAlign = TextAlign.Center
                         )
 
+                        // Final anagram puzzle entry
                         LetterScrapPuzzleView(
                             letters = viewModel.discoveredCuratorLetters,
                             solution = "SASQUATCH",
@@ -130,6 +137,7 @@ fun CuratorEndingView(
                     }
                 }
             } else {
+                // Incomplete journal state prompting the player to keep looking
                 Text(
                     text = "The curator listens carefully as you describe the cave, the mine, and the impossible figure in the dark.\n\nBut when she spreads your journal photos across the desk, there are still gaps in the story.",
                     color = Color.White.copy(alpha = 0.88f),
@@ -157,6 +165,7 @@ fun CuratorEndingView(
     }
 }
 
+/** Displays completion summary, reward codes, and game restart dialog. */
 @Composable
 fun CuratorRewardWrapUpView(
     viewModel: GameViewModel,
@@ -171,7 +180,7 @@ fun CuratorRewardWrapUpView(
     ) {
         Text("The Museum is Saved", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
-        // Story Card
+        // Narrative conclusion card
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -203,7 +212,7 @@ fun CuratorRewardWrapUpView(
             Text("Enter $5000 Grand Prize Draw")
         }
 
-        // Rewards Card
+        // Summary of unlocked achievements and codes
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -232,6 +241,7 @@ fun CuratorRewardWrapUpView(
         }
     }
 
+    // Confirmation dialog before clearing game state
     if (showExitDialog) {
         AlertDialog(
             onDismissRequest = { showExitDialog = false },
@@ -257,6 +267,7 @@ fun CuratorRewardWrapUpView(
     }
 }
 
+/** Reusable row item for displaying reward achievements. */
 @Composable
 private fun RewardRow(icon: ImageVector, title: String, message: String) {
     Row(
